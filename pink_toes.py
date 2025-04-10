@@ -196,7 +196,7 @@ def measure_fet_fixed_vds(min_vgs, max_vgs, max_vds, num_vgs, num_vds):
 
             data = dict(
                 vbias = v_1,
-                vds = v_2,
+                vds = vds,
                 vgs = vgs,
                 ids = (v_1 - v_2)/rbias,
                 Rbias = rbias,

@@ -23,7 +23,7 @@ rbias = 4.991e3
 voltage_settle_time = 0.1
 
 fet_pn = 'J113FS-ND'
-test_fet_num = 1
+test_fet_num = 3
 fet_name = f'{fet_pn}_{test_fet_num}'
 
 #%%
@@ -241,7 +241,7 @@ axes[0].grid(True)
 
 
 # Plot Rfet vs V_DS (with cutoff at 1e6 Ohm)
-for vgs, subdf in df_vgs.groupby('vds'):
+for vds, subdf in df_vds.groupby('vds'):
     subdf_cut = subdf.copy()
     subdf_cut = subdf_cut[subdf_cut['Rfet'] <= 1e6]  # Apply cutoff
     axes[1].plot(subdf_cut['vgs'], subdf_cut['Rfet'], label=f"Vds = {vds} V")

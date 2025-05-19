@@ -10,8 +10,8 @@ from amcc.instruments.srs_sim970 import SIM970
 from amcc.instruments.agilent_34411a import Agilent34411A
 
 
-ch_s = 2
-ch_gate = 3
+ch_s = 5
+ch_gate = 6
 
 srs_s = SIM928('GPIB0::2::INSTR', ch_s)
 srs_gate = SIM928('GPIB0::2::INSTR', ch_gate)
@@ -19,12 +19,17 @@ srs_dmm = SIM970('GPIB0::2::INSTR', 7)
 multi1 = Agilent34411A('GPIB0::22::INSTR')
 multi2 = Agilent34411A('GPIB0::21::INSTR')
 
-rbias = 4.991e3
+rbias = 97e3
 voltage_settle_time = 0.1
 
-fet_pn = 'J113FS-ND'
-test_fet_num = 3
+fet_pn = 'MMBF4117'
+test_fet_num = 1
 fet_name = f'{fet_pn}_{test_fet_num}'
+
+min_vgs = 0
+max_vgs = -0.75
+max_vds = 5
+max_vbias = 15
 
 #%%
 def measure_fet_fixed_vgs(min_vgs, max_vgs, max_vbias, num_vgs, num_vbias):
@@ -81,9 +86,6 @@ def measure_fet_fixed_vgs(min_vgs, max_vgs, max_vbias, num_vgs, num_vbias):
 
 
 #%%
-min_vgs = -1.1
-max_vgs = -1.5
-max_vbias = 5
 num_vgs = 10
 num_vbias = 100
 
@@ -130,12 +132,11 @@ plt.tight_layout()
 plt.show()
 fig.savefig(f'fet_output_characteristics_vds_{fet_name}.png', dpi=300)
 plt.close()
-print("Figure saved to 'fet_output_characteristics.png'")
 
 #%%
 def vds_binary_search(target_vds):
     N = 2
-    tolerance = 0.05
+    tolerance = 0.03
 
     max_v = 20
     min_v = 0
@@ -218,9 +219,6 @@ def measure_fet_fixed_vds(min_vgs, max_vgs, max_vds, num_vgs, num_vds):
 
 
 #%%
-min_vgs = -1.1
-max_vgs = -1.5
-max_vds = 2
 num_vgs = 100
 num_vds = 5
 
@@ -265,7 +263,6 @@ plt.tight_layout()
 plt.show()
 fig.savefig(f'fet_output_characteristics_vgs_{fet_name}.png', dpi=300)
 plt.close()
-print("Figure saved to 'fet_output_characteristics.png'")
 
 
 # %%
